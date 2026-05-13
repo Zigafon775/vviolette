@@ -1,5 +1,5 @@
 -- vviolette Loader by Zigafon775
--- Тёмная тема + Draggable
+-- Тёмная/Светлая тема + Discord
 
 local Players = game:GetService("Players")
 local TweenService = game:GetService("TweenService")
@@ -14,91 +14,123 @@ ScreenGui.ResetOnSpawn = false
 ScreenGui.Parent = playerGui
 
 local Main = Instance.new("Frame")
-Main.Size = UDim2.new(0, 360, 0, 240)
-Main.Position = UDim2.new(0.5, -180, 0.5, -120)
-Main.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
+Main.Size = UDim2.new(0, 380, 0, 260)
+Main.Position = UDim2.new(0.5, -190, 0.5, -130)
+Main.BackgroundColor3 = Color3.fromRGB(18, 18, 24)
 Main.BorderSizePixel = 0
 Main.Parent = ScreenGui
 
-Instance.new("UICorner", Main).CornerRadius = UDim.new(0, 14)
+Instance.new("UICorner", Main).CornerRadius = UDim.new(0, 16)
 
 -- Заголовок
 local Title = Instance.new("TextLabel")
-Title.Size = UDim2.new(1, 0, 0, 55)
+Title.Size = UDim2.new(1, 0, 0, 60)
 Title.BackgroundTransparency = 1
 Title.Text = "vviolette script"
-Title.TextColor3 = Color3.fromRGB(240, 240, 240)
+Title.TextColor3 = Color3.fromRGB(235, 235, 235)
 Title.TextScaled = true
 Title.Font = Enum.Font.GothamBold
 Title.Parent = Main
 
 local Author = Instance.new("TextLabel")
 Author.Size = UDim2.new(1, 0, 0, 25)
-Author.Position = UDim2.new(0, 0, 0, 52)
+Author.Position = UDim2.new(0, 0, 0, 55)
 Author.BackgroundTransparency = 1
 Author.Text = "by Zigafon775"
-Author.TextColor3 = Color3.fromRGB(120, 120, 140)
+Author.TextColor3 = Color3.fromRGB(140, 140, 160)
 Author.TextScaled = true
 Author.Font = Enum.Font.Gotham
 Author.Parent = Main
 
 -- Кнопка запуска
 local StartBtn = Instance.new("TextButton")
-StartBtn.Size = UDim2.new(0.85, 0, 0, 55)
-StartBtn.Position = UDim2.new(0.075, 0, 0, 100)
-StartBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 35)
+StartBtn.Size = UDim2.new(0.85, 0, 0, 58)
+StartBtn.Position = UDim2.new(0.075, 0, 0, 110)
+StartBtn.BackgroundColor3 = Color3.fromRGB(35, 35, 45)
 StartBtn.Text = "ЗАПУСТИТЬ СКРИПТ"
 StartBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 StartBtn.TextScaled = true
 StartBtn.Font = Enum.Font.GothamBold
 StartBtn.Parent = Main
 
-Instance.new("UICorner", StartBtn).CornerRadius = UDim.new(0, 12)
+Instance.new("UICorner", StartBtn).CornerRadius = UDim.new(0, 14)
 
--- Переключатель темы (просто для красоты)
+-- Discord ссылка
+local DiscordBtn = Instance.new("TextButton")
+DiscordBtn.Size = UDim2.new(0.85, 0, 0, 40)
+DiscordBtn.Position = UDim2.new(0.075, 0, 0, 180)
+DiscordBtn.BackgroundColor3 = Color3.fromRGB(88, 101, 242)
+DiscordBtn.Text = "discord.gg/qXxSGDtkeC"
+DiscordBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+DiscordBtn.TextScaled = true
+DiscordBtn.Font = Enum.Font.GothamSemibold
+DiscordBtn.Parent = Main
+
+Instance.new("UICorner", DiscordBtn).CornerRadius = UDim.new(0, 10)
+
+-- Переключатель темы (иконка)
 local ThemeBtn = Instance.new("TextButton")
-ThemeBtn.Size = UDim2.new(0.85, 0, 0, 40)
-ThemeBtn.Position = UDim2.new(0.075, 0, 0, 170)
-ThemeBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 35)
-ThemeBtn.Text = "Сменить тему"
-ThemeBtn.TextColor3 = Color3.fromRGB(200, 200, 200)
+ThemeBtn.Size = UDim2.new(0, 45, 0, 45)
+ThemeBtn.Position = UDim2.new(1, -55, 0, 10)
+ThemeBtn.BackgroundTransparency = 1
+ThemeBtn.Text = "🌑"
 ThemeBtn.TextScaled = true
-ThemeBtn.Font = Enum.Font.GothamSemibold
+ThemeBtn.Font = Enum.Font.GothamBold
+ThemeBtn.TextColor3 = Color3.fromRGB(200, 200, 200)
 ThemeBtn.Parent = Main
 
-Instance.new("UICorner", ThemeBtn).CornerRadius = UDim.new(0, 10)
+local isDark = true
 
--- Функция запуска
+local function switchTheme()
+    isDark = not isDark
+    if isDark then
+        Main.BackgroundColor3 = Color3.fromRGB(18, 18, 24)
+        ThemeBtn.Text = "🌑"
+    else
+        Main.BackgroundColor3 = Color3.fromRGB(245, 245, 250)
+        ThemeBtn.Text = "☀️"
+    end
+end
+
+ThemeBtn.MouseButton1Click:Connect(switchTheme)
+
+-- Запуск скрипта
 local function loadScript()
+    StartBtn.Text = "ЗАГРУЗКА..."
+    StartBtn.BackgroundColor3 = Color3.fromRGB(60, 60, 70)
+    
     local success, err = pcall(function()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/Zigafon775/vviolette/main/vviolette.lua"))()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Zigafon775/vviolette/main/vviolette.lua", true))()
     end)
+    
     if success then
+        StartBtn.Text = "✅ УСПЕШНО ЗАПУЩЕНО"
         print("✅ vviolette script by Zigafon775 успешно запущен!")
     else
+        StartBtn.Text = "❌ ОШИБКА"
         warn("❌ Ошибка загрузки: " .. tostring(err))
     end
 end
 
 StartBtn.MouseButton1Click:Connect(loadScript)
+DiscordBtn.MouseButton1Click:Connect(function()
+    setclipboard("https://discord.gg/qXxSGDtkeC")
+    DiscordBtn.Text = "✅ Скопировано!"
+    wait(2)
+    DiscordBtn.Text = "discord.gg/qXxSGDtkeC"
+end)
 
--- Перетаскивание окна
+print("vviolette Loader by Zigafon775 загружен")
+
+-- Draggable
 local dragging = false
-local dragInput
-local dragStart
-local startPos
+local dragStart, startPos
 
 Main.InputBegan:Connect(function(input)
     if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
         dragging = true
         dragStart = input.Position
         startPos = Main.Position
-    end
-end)
-
-Main.InputEnded:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-        dragging = false
     end
 end)
 
@@ -109,4 +141,8 @@ UserInputService.InputChanged:Connect(function(input)
     end
 end)
 
-print("vviolette Loader by Zigafon775 загружен")
+Main.InputEnded:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        dragging = false
+    end
+end)
