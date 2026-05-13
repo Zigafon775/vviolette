@@ -6,7 +6,7 @@ local UserInputService = game:GetService("UserInputService")
 local playerGui = Players.LocalPlayer:WaitForChild("PlayerGui")
 
 local ScreenGui = Instance.new("ScreenGui")
-ScreenGui.Name = "vvioletteLoader"
+ScreenGui.Name = "VvioletteLoader"
 ScreenGui.ResetOnSpawn = false
 ScreenGui.Parent = playerGui
 
@@ -35,7 +35,7 @@ local Subtitle = Instance.new("TextLabel")
 Subtitle.Size = UDim2.new(1, -80, 0, 30)
 Subtitle.Position = UDim2.new(0, 20, 0, 65)
 Subtitle.BackgroundTransparency = 1
-Subtitle.Text = "by Zigafon775"
+Subtitle.Text = "By Zigafon775"
 Subtitle.TextColor3 = Color3.fromRGB(160, 160, 180)
 Subtitle.TextScaled = true
 Subtitle.Font = Enum.Font.Gotham
