@@ -1,5 +1,5 @@
 -- vviolette Loader by Zigafon775
--- Тёмная/Светлая тема + Discord
+-- Исправленная версия
 
 local Players = game:GetService("Players")
 local TweenService = game:GetService("TweenService")
@@ -24,23 +24,56 @@ Instance.new("UICorner", Main).CornerRadius = UDim.new(0, 16)
 
 -- Заголовок
 local Title = Instance.new("TextLabel")
-Title.Size = UDim2.new(1, 0, 0, 60)
+Title.Size = UDim2.new(1, -70, 0, 60)
+Title.Position = UDim2.new(0, 15, 0, 0)
 Title.BackgroundTransparency = 1
 Title.Text = "vviolette script"
 Title.TextColor3 = Color3.fromRGB(235, 235, 235)
 Title.TextScaled = true
 Title.Font = Enum.Font.GothamBold
+Title.TextXAlignment = Enum.TextXAlignment.Left
 Title.Parent = Main
 
 local Author = Instance.new("TextLabel")
-Author.Size = UDim2.new(1, 0, 0, 25)
-Author.Position = UDim2.new(0, 0, 0, 55)
+Author.Size = UDim2.new(1, -70, 0, 25)
+Author.Position = UDim2.new(0, 15, 0, 52)
 Author.BackgroundTransparency = 1
 Author.Text = "by Zigafon775"
 Author.TextColor3 = Color3.fromRGB(140, 140, 160)
 Author.TextScaled = true
 Author.Font = Enum.Font.Gotham
+Author.TextXAlignment = Enum.TextXAlignment.Left
 Author.Parent = Main
+
+-- Иконка темы (аккуратная)
+local ThemeBtn = Instance.new("TextButton")
+ThemeBtn.Size = UDim2.new(0, 50, 0, 50)
+ThemeBtn.Position = UDim2.new(1, -60, 0, 8)
+ThemeBtn.BackgroundTransparency = 1
+ThemeBtn.Text = "🌑"
+ThemeBtn.TextScaled = true
+ThemeBtn.Font = Enum.Font.GothamBold
+ThemeBtn.TextColor3 = Color3.fromRGB(200, 200, 200)
+ThemeBtn.Parent = Main
+
+local isDark = true
+
+local function switchTheme()
+    isDark = not isDark
+    if isDark then
+        Main.BackgroundColor3 = Color3.fromRGB(18, 18, 24)
+        Title.TextColor3 = Color3.fromRGB(235, 235, 235)
+        Author.TextColor3 = Color3.fromRGB(140, 140, 160)
+        ThemeBtn.Text = "🌑"
+    else
+        Main.BackgroundColor3 = Color3.fromRGB(245, 245, 250)
+        Title.TextColor3 = Color3.fromRGB(30, 30, 30)
+        Author.TextColor3 = Color3.fromRGB(80, 80, 90)
+        ThemeBtn.Text = "☀️"
+    end
+end
+
+ThemeBtn.MouseButton1Click:Connect(switchTheme)
 
 -- Кнопка запуска
 local StartBtn = Instance.new("TextButton")
@@ -55,10 +88,10 @@ StartBtn.Parent = Main
 
 Instance.new("UICorner", StartBtn).CornerRadius = UDim.new(0, 14)
 
--- Discord ссылка
+-- Discord
 local DiscordBtn = Instance.new("TextButton")
-DiscordBtn.Size = UDim2.new(0.85, 0, 0, 40)
-DiscordBtn.Position = UDim2.new(0.075, 0, 0, 180)
+DiscordBtn.Size = UDim2.new(0.85, 0, 0, 42)
+DiscordBtn.Position = UDim2.new(0.075, 0, 0, 185)
 DiscordBtn.BackgroundColor3 = Color3.fromRGB(88, 101, 242)
 DiscordBtn.Text = "discord.gg/qXxSGDtkeC"
 DiscordBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -68,36 +101,10 @@ DiscordBtn.Parent = Main
 
 Instance.new("UICorner", DiscordBtn).CornerRadius = UDim.new(0, 10)
 
--- Переключатель темы (иконка)
-local ThemeBtn = Instance.new("TextButton")
-ThemeBtn.Size = UDim2.new(0, 45, 0, 45)
-ThemeBtn.Position = UDim2.new(1, -55, 0, 10)
-ThemeBtn.BackgroundTransparency = 1
-ThemeBtn.Text = "🌑"
-ThemeBtn.TextScaled = true
-ThemeBtn.Font = Enum.Font.GothamBold
-ThemeBtn.TextColor3 = Color3.fromRGB(200, 200, 200)
-ThemeBtn.Parent = Main
-
-local isDark = true
-
-local function switchTheme()
-    isDark = not isDark
-    if isDark then
-        Main.BackgroundColor3 = Color3.fromRGB(18, 18, 24)
-        ThemeBtn.Text = "🌑"
-    else
-        Main.BackgroundColor3 = Color3.fromRGB(245, 245, 250)
-        ThemeBtn.Text = "☀️"
-    end
-end
-
-ThemeBtn.MouseButton1Click:Connect(switchTheme)
-
--- Запуск скрипта
+-- Функция запуска
 local function loadScript()
     StartBtn.Text = "ЗАГРУЗКА..."
-    StartBtn.BackgroundColor3 = Color3.fromRGB(60, 60, 70)
+    StartBtn.BackgroundColor3 = Color3.fromRGB(50, 50, 60)
     
     local success, err = pcall(function()
         loadstring(game:HttpGet("https://raw.githubusercontent.com/Zigafon775/vviolette/main/vviolette.lua", true))()
@@ -105,18 +112,19 @@ local function loadScript()
     
     if success then
         StartBtn.Text = "✅ УСПЕШНО ЗАПУЩЕНО"
-        print("✅ vviolette script by Zigafon775 успешно запущен!")
+        print("✅ vviolette script успешно запущен!")
     else
-        StartBtn.Text = "❌ ОШИБКА"
-        warn("❌ Ошибка загрузки: " .. tostring(err))
+        StartBtn.Text = "❌ ОШИБКА ЗАПУСКА"
+        warn("❌ Ошибка: " .. tostring(err))
     end
 end
 
 StartBtn.MouseButton1Click:Connect(loadScript)
+
 DiscordBtn.MouseButton1Click:Connect(function()
     setclipboard("https://discord.gg/qXxSGDtkeC")
-    DiscordBtn.Text = "✅ Скопировано!"
-    wait(2)
+    DiscordBtn.Text = "✅ Скопировано в буфер!"
+    task.wait(2)
     DiscordBtn.Text = "discord.gg/qXxSGDtkeC"
 end)
 
